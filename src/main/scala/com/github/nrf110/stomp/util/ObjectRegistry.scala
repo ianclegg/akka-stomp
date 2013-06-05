@@ -28,7 +28,7 @@ package com.github.nrf110.stomp.util
 import java.util.concurrent.atomic.AtomicReference
 import scala.annotation.tailrec
 
-private[http] trait ObjectRegistry[K, V] {
+private[stomp] trait ObjectRegistry[K, V] {
   private[this] val registry = new AtomicReference(Map.empty[K, V])
 
   @tailrec

@@ -14,8 +14,10 @@ object StompHeader {
 }
 
 object StompHeaders {
-  case class `accept-version` extends StompHeader {
+  object `accept-version` { def apply(first: Version, more: Version*): `accept-version` = apply(first +: more) }
+  case class `accept-version`(versions: Seq[Version]) extends StompHeader {
     def name = "accept-version"
+    def value = versions.mkString(",")
   }
 
   case class `content-length`(length: Long) extends StompHeader {
@@ -23,8 +25,9 @@ object StompHeaders {
     def value = length.toString
   }
 
-  case class `content-type`() extends StompHeader {
+  case class `content-type`(contentType: ContentType) extends StompHeader {
     def name = "content-type"
+    def value = contentType.value
   }
 
   case class `heart-beat`(senderCapability: Long, requestedCapability: Long) extends StompHeader {
@@ -46,7 +49,8 @@ object StompHeaders {
     def name = "receipt"
   }
 
-  case class version extends StompHeader {
+  case class version(version: Version) extends StompHeader {
     def name = "version"
+    def value = version.toString
   }
 }

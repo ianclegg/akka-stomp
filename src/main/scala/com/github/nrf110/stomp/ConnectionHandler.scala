@@ -20,15 +20,5 @@ class ConnectionHandler(
 
     case c @ Connected(remote, local) =>
       val connection = sender
-
-      val init = new TcpPipelineHandler.Init(
-
-      ) {
-        override def makeContext(actorContext: ActorContext) = {
-          new PipelineContext {}
-        }
-      }
-
-      system.actorOf(TcpPipelineHandler(init, connection, listener))
   }
 }

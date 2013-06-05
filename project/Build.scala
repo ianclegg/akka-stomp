@@ -27,7 +27,7 @@ object Dependencies {
     val logback     = "1.0.0"
     val scalatest   = "2.0.M5b"
     val junit       = "4.9"
-    val akka		    = "2.2-M3"
+    val akka		    = "2.2.0-RC1"
     val parboiled   = "1.1.4"
   }
   

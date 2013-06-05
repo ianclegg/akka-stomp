@@ -2,7 +2,7 @@ package com.github.nrf110.stomp
 
 import akka.actor.{ActorLogging, Actor}
 
-case class Subscription(destination: String, id: String, onFrame: (StompFrame) => Unit)
+case class Subscription(destination: String, id: String, onFrame: (ServerFrame) => Unit)
 
 private[stomp] class SubscriptionManager(subscriptionMatcher: ISubscriptionMatcher)
   extends Actor
@@ -16,6 +16,8 @@ private[stomp] class SubscriptionManager(subscriptionMatcher: ISubscriptionMatch
       subscriptions = subscription :: subscriptions
 
     case frame: ServerFrame =>
-      subscriptions filter (subscription => subscriptionMatcher.isMatch(frame.destination, subscription.destination)) foreach (_.onFrame(frame))
+      subscriptions.filter { subscription =>
+        subscriptionMatcher.isMatch(frame.destination.value, subscription.destination)
+      } foreach (_.onFrame(frame))
   }
 }

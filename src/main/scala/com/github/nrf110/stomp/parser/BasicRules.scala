@@ -36,6 +36,8 @@ private[parser] object BasicRules extends org.parboiled.scala.Parser {
 
   def LWS = rule { optional(CRLF) ~ oneOrMore(anyOf(" \t")) }
 
+  def OptWS = rule { zeroOrMore(LWS) }
+
   def Separator = rule { anyOf("()<>@,;:\\\"/[]?={} \t") }
 
   def Text = rule { !CTL ~ ANY | LWS }

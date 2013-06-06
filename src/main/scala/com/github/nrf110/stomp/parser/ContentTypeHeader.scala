@@ -31,7 +31,7 @@ import StompHeaders._
 trait ContentTypeHeader {
   this: Parser with ProtocolParameterRules with CommonActions =>
 
-  def `*Content-Type` = rule {
+  def `*content-type` = rule {
     ContentTypeHeaderValue ~~> `content-type`
   }
 

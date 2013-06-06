@@ -53,4 +53,6 @@ object StompHeaders {
     def name = "version"
     def value = version.toString
   }
+
+  case class RawHeader(name: String, value: String) extends StompHeader
 }

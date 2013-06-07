@@ -25,14 +25,14 @@
 package com.github.nrf110.stomp.parser
 
 import org.parboiled.scala._
-import org.parboiled.errors.{ ParsingException, ParserRuntimeException, ErrorUtils }
+import org.parboiled.errors.{ ParserRuntimeException, ErrorUtils }
 import com.github.nrf110.stomp.message.{ StompHeader, StompHeaders }
 import com.github.nrf110.stomp.ErrorInfo
 import annotation.tailrec
 import java.lang.reflect.Method
 
 object StompParser
-  extends Parser
+  extends org.parboiled.scala.Parser
   with ContentTypeHeader
   with ProtocolParameterRules
   with CommonActions {

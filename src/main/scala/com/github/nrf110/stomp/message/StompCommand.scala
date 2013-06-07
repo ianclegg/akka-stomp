@@ -29,7 +29,7 @@ object StompCommands extends ObjectRegistry[String, StompCommand] {
   //client commands
   val SEND          = new StompCommand("SEND", true)
   val SUBSCRIBE     = new StompCommand("SUBSCRIBE", false)
-  val UNSUSBSCRIBE  = new StompCommand("UNSUBSCRIBE", false)
+  val UNSUBSCRIBE  = new StompCommand("UNSUBSCRIBE", false)
   val BEGIN         = new StompCommand("BEING", false)
   val COMMIT        = new StompCommand("COMMIT", false)
   val ABORT         = new StompCommand("ABORT", false)
@@ -39,8 +39,8 @@ object StompCommands extends ObjectRegistry[String, StompCommand] {
   val DISCONNECT    = new StompCommand("DISCONNECT", false)
   val STOMP         = new StompCommand("STOMP", false)
   //server commands
-  val CONNECTED = new StompCommand("CONNECTED", false)
-  val MESSAGE = new StompCommand("MESSAGE", true)
-  val RECEIPT = new StompCommand("RECEIPT", false)
-  val ERROR = new StompCommand("ERROR", true)
+  val CONNECTED     = new StompCommand("CONNECTED", false)
+  val MESSAGE       = new StompCommand("MESSAGE", true)
+  val RECEIPT       = new StompCommand("RECEIPT", false)
+  val ERROR         = new StompCommand("ERROR", true)
 }

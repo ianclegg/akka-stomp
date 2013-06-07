@@ -1,6 +1,7 @@
 package com.github.nrf110.stomp
 
 import akka.actor.{ActorLogging, Actor}
+import com.github.nrf110.stomp.message.ServerFrame
 
 case class Subscription(destination: String, id: String, onFrame: (ServerFrame) => Unit)
 

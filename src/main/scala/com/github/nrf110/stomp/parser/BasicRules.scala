@@ -30,6 +30,8 @@ import java.lang.{ StringBuilder => JStringBuilder }
 private[parser] object BasicRules extends org.parboiled.scala.Parser {
   def Char = rule { "\u0000" - "\u007F" }
 
+  def Digit = rule { "0" - "9" }
+
   def CTL = rule { "\u0000" - "\u001F" | "\u007F" }
 
   def CRLF = rule { str("\r\n") }
@@ -53,4 +55,6 @@ private[parser] object BasicRules extends org.parboiled.scala.Parser {
   def QuotedString = rule { "\"" ~ push(new JStringBuilder) ~ zeroOrMore(QuotedPair | QDText) ~~> (_.toString) ~ "\"" }
 
   def Token: Rule1[String] = rule { oneOrMore(!CTL ~ !Separator ~ ANY) ~> identity }
+
+  def ListSep = rule { oneOrMore("," ~ OptWS) }
 }

@@ -14,8 +14,8 @@ object StompHeader {
 }
 
 object StompHeaders {
-  object `accept-version` { def apply(first: Version, more: Version*): `accept-version` = apply(first +: more) }
-  case class `accept-version`(versions: Seq[Version]) extends StompHeader {
+  object `accept-version` { def apply(first: StompVersion, more: StompVersion*): `accept-version` = apply(first +: more) }
+  case class `accept-version`(versions: Seq[StompVersion]) extends StompHeader {
     def name = "accept-version"
     def value = versions.mkString(",")
   }
@@ -35,21 +35,7 @@ object StompHeaders {
     def value = s"$senderCapability,$requestedCapability"
   }
 
-  case class login(username: String) extends StompHeader {
-    def name = "login"
-    def value = username
-  }
-
-  case class passcode(password: String) extends StompHeader {
-    def name = "passcode"
-    def value = password
-  }
-
-  case class receipt(value: String) extends StompHeader {
-    def name = "receipt"
-  }
-
-  case class version(version: Version) extends StompHeader {
+  case class version(version: StompVersion) extends StompHeader {
     def name = "version"
     def value = version.toString
   }

@@ -24,7 +24,6 @@
 
 package com.github.nrf110.stomp.parser
 
-import org.parboiled.errors.ParsingException
 import com.github.nrf110.stomp.message.{ StompCharsets, StompCharset, MediaTypes, MediaType }
 import MediaTypes._
 
@@ -47,6 +46,6 @@ private[parser] trait CommonActions { this: org.parboiled.scala.Parser =>
   val getCharset: String => StompCharset = { charsetName =>
     StompCharsets.getForKey(charsetName.toLowerCase)
                  .orElse(StompCharsets.CustomStompCharset(charsetName))
-                 .getOrElse(throw new ParsingException(s"Unsupported charset: $charsetName"))
+                 .getOrElse(throw new org.parboiled.errors.ParsingException(s"Unsupported charset: $charsetName"))
   }
 }

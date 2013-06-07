@@ -29,7 +29,7 @@ import com.github.nrf110.stomp.message.{ ContentType, StompHeaders }
 import StompHeaders._
 
 trait ContentTypeHeader {
-  this: Parser with ProtocolParameterRules with CommonActions =>
+  this: org.parboiled.scala.Parser with ProtocolParameterRules with CommonActions =>
 
   def `*content-type` = rule {
     ContentTypeHeaderValue ~~> `content-type`

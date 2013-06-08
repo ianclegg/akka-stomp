@@ -20,7 +20,7 @@ object StompHeaders {
     def value = versions.mkString(",")
   }
 
-  case class `content-length`(length: Long) extends StompHeader {
+  case class `content-length`(length: Int) extends StompHeader {
     def name = "content-length"
     def value = length.toString
   }

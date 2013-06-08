@@ -48,7 +48,7 @@ case class Error(override val headers: List[StompHeader], body: ByteString) exte
 case class Receipt(override val headers: List[StompHeader]) extends StompFrame(RECEIPT, headers) with ServerFrame
 
 object StompFrame {
-  def apply(command: StompCommand, headers: List[StompHeader], body: ByteString) = {
+  def apply(command: StompCommand, headers: List[StompHeader], body: ByteString): StompFrame = {
     command match {
       case CONNECTED  => Connected(headers)
       case MESSAGE    => Message(headers, body)

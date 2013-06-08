@@ -480,6 +480,9 @@ object StompHeaderParser {
         case '\r' if byteChar(input, ix + 1) == '\n' ⇒
           if (isWhiteSpace(byteChar(input, ix + 2))) scanHeaderValue(input, start, maxHeaderValueEndIx)(spaceAppended, ix + 3)
           else (if (sb != null) sb.toString else asciiString(input, start, ix), ix + 2)
+        case '\n' =>
+          if (isWhiteSpace(byteChar(input, ix + 1))) scanHeaderValue(input, start, maxHeaderValueEndIx)(spaceAppended, ix + 2)
+          else (if (sb != null) sb.toString else asciiString(input, start, ix), ix + 1)
         case c if c >= ' ' ⇒ scanHeaderValue(input, start, maxHeaderValueEndIx)(if (sb != null) sb.append(c) else sb, ix + 1)
         case c             ⇒ fail(s"Illegal character '${escape(c)}' in header name")
       }

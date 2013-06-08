@@ -46,6 +46,7 @@ private[parser] object SpecializedHeaderValueParsers {
         if (isDigit(c)) recurse(ix + 1, result * 10 + c - '0')
         else if (isWhiteSpace(c)) recurse(ix + 1, result)
         else if (c == '\r' && byteChar(input, ix + 1) == '\n' && result < Int.MaxValue) (`content-length`(result.toInt), ix + 2)
+        else if (c == '\n' && result < Int.MaxValue) (`content-length`(result.toInt), ix + 1)
         else fail("Illegal `content-length` header value")
       }
       recurse()
@@ -54,7 +55,26 @@ private[parser] object SpecializedHeaderValueParsers {
 
   object HeartBeatParser extends HeaderValueParser("heart-beat", maxValueCount = 1) {
     def apply(input: CompactByteString, valueStart: Int, warnOnIllegalHeader: ErrorInfo => Unit): (StompHeader, Int) = {
+      @tailrec def clientMillis(ix: Int = valueStart, result: Long = 0): (Int, Int) = {
+        val c = byteChar(input, ix)
+        if (isDigit(c)) clientMillis(ix + 1, result * 10 + c - '0')
+        else if (isWhiteSpace(c)) clientMillis(ix + 1, result)
+        else if (c == ',' && result < Int.MaxValue) (result.toInt, ix + 1)
+        else fail("Illegal client milliseconds in heart-beat")
+      }
 
+      @tailrec def serverMillis(ix: Int, result: Long = 0): (Int, Int) = {
+        val c = byteChar(input, ix)
+        if (isDigit(c)) serverMillis(ix + 1, result * 10 + c - '0')
+        else if (isWhiteSpace(c)) serverMillis(ix + 1, result)
+        else if (c == '\r' && byteChar(input, ix + 1) == '\n' && result < Int.MaxValue) (result.toInt, ix + 2)
+        else if (c == '\n' && result < Int.MaxValue) (result.toInt, ix + 1)
+        else fail ("Illegal server milliseconds in heart-beat")
+      }
+
+      val (sx, nextValueStart) = clientMillis()
+      val (sy, nextLineStart) = serverMillis(nextValueStart)
+      (`heart-beat`(sx, sy), nextLineStart)
     }
   }
 }
